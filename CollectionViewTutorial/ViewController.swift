@@ -1,6 +1,6 @@
 //
 //  ViewController.swift
-//  CollectionViewTutorial
+//  CollectionViewTutorial http://guides.codepath.com/ios/Collection-View-Guide#customizing-the-cells-and-spacing-uicollectionviewdelegateflowlayout
 //
 //  Created by Fer on 1/25/16.
 //  Copyright © 2016 Fernando Mendoza. All rights reserved.
@@ -23,7 +23,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         
         
         //Programatically Configurying the flow layout
-        flowLayout.scrollDirection = .Vertical
+        flowLayout.scrollDirection = .Horizontal
         flowLayout.minimumLineSpacing = 0
         flowLayout.minimumInteritemSpacing = 0
         flowLayout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 10)
@@ -68,6 +68,19 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             cell.colorLabel.text = String(format: "%.0f, %.0f, %.0f", redComponent, greenComponent, blueComponent)
         }
         return cell
+    }
+    
+    // MARK: UICollectionViewDelegateFlowLayout methods
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        let totalwidth = collectionView.bounds.size.width;
+        let numberOfCellsPerRow = 3
+        let oddEven = indexPath.row / numberOfCellsPerRow % 2
+        let dimensions = CGFloat(Int(totalwidth) / numberOfCellsPerRow)
+        if (oddEven == 0) {
+            return CGSizeMake(dimensions, dimensions)
+        } else {
+            return CGSizeMake(dimensions, dimensions / 2)
+        }
     }
 
 
